@@ -1,64 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.okhttp.MainActivity">
-    <LinearLayout
+    android:background="#90e966"
+    tools:context="com.example.okhttp.Activity.MainActivity">
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:text="03161257"
-            android:id="@+id/email"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:text="yanghao.0"
-            android:id="@+id/password"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="120dp"
         android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_height="wrap_content">
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="验证码"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/checkbox"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp" />
-    </LinearLayout>
-    <Button
-        android:id="@+id/login"
-        android:text="Login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/text"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="账号"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:text="03161257"
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="密码"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:text="yanghao.0"
+                android:id="@+id/password"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:text="验证码"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/checkbox"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:layout_height="40dp" />
+        </LinearLayout>
 
-    </ScrollView>
+        <Button
+            android:id="@+id/login"
+            android:text="登陆"
+            android:background="#3c78d8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+    </LinearLayout>
 
-
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    android:id="@+id/mytoolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:title="学校一掌通"
+    app:subtitle="个人信息"
+    >
+    <TextView
+        android:id="@+id/title"
+        android:gravity="center"
+        android:text="欢迎你，杨豪"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+</android.support.v7.widget.Toolbar>

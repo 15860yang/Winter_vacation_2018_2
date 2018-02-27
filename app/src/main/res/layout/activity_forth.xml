@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.okhttp.Activity.ForthActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/forthActivityToolbar"/>
+    <View
+        android:layout_marginTop="20dp"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <!--星期头-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <view
+            android:background="#ffffff"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:text="周一"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <view
+            android:background="#ffffff"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:text="周二"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <view
+            android:background="#ffffff"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:text="周三"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <view
+            android:background="#ffffff"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:text="周四"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <view
+            android:background="#ffffff"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:text="周五"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <view
+            android:background="#ffffff"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+    <!--课表主体-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <View
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--上午下午边框-->
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:gravity="center"
+                    android:text="上午"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <View
+                    android:background="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:gravity="center"
+                    android:text="上午"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+            <View
+                android:background="#ffffff"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <!--课表内容-->
+            <LinearLayout
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <!--第一节课-->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/weekof_Mon_01"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thu_01"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Wed_01"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thr_01"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Fir_01"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"/>
+                <!--第二节课-->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/weekof_Mon_02"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thu_02"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+
+                    <TextView
+                        android:id="@+id/weekof_Wed_02"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thr_02"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Fir_02"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"/>
+                <!--第三节课-->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/weekof_Mon_03"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thu_03"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+
+                    <TextView
+                        android:id="@+id/weekof_Wed_03"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thr_03"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Fir_03"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"/>
+                <!--第四节课-->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/weekof_Mon_04"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thu_04"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+
+                    <TextView
+                        android:id="@+id/weekof_Wed_04"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Thr_04"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="#ffffff"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/weekof_Fir_04"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

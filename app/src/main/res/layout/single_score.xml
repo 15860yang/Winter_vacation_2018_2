@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--学年  名称  性质  学分  绩点  成绩   补考成绩  -->
+        <TextView
+            android:id="@+id/score_No_01"
+            android:text="2017-2018年第一学期"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:id="@+id/score_column"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:gravity="center"
+                android:text="科目名称"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:gravity="center"
+                android:text="性质"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:gravity="center"
+                android:text="学分"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:gravity="center"
+                android:text="绩点"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:gravity="center"
+                android:text="成绩"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:id="@+id/score_Subject_name"
+                android:gravity="center"
+                android:text="信号与系统"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/score_nature"
+                android:gravity="center"
+                android:text="必修课"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/score_credit"
+                android:gravity="center"
+                android:text="2.00"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/score_GPA"
+                android:gravity="center"
+                android:text="23"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/score_score"
+                android:gravity="center"
+                android:text="3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

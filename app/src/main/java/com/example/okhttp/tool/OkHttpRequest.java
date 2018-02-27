@@ -1,4 +1,4 @@
-package com.example.okhttp;
+package com.example.okhttp.tool;
 
 import android.util.Log;
 
@@ -17,7 +17,6 @@ import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -32,7 +31,7 @@ public class OkHttpRequest {
      * 声明静态变量
      */
     private static Document htmlData = null;
-    private static ArrayList<String> personData = new ArrayList<>();
+    private static HashMap<String,String> personData = new HashMap<>();
 
     private static byte[] identifying_code = null;
 
@@ -43,7 +42,8 @@ public class OkHttpRequest {
     private static boolean isGetIdentifying_Code = false;
     private static int isLoginSuccessful = -1;
     private static boolean isgetPersonDta = false;
-
+    private static boolean isgetscore_inquiry = false;
+    private static boolean isgetstu_per_schedules = false;
     /**
      * 静态Client声明
      */
@@ -64,13 +64,8 @@ public class OkHttpRequest {
     学生个人课表,返回首页,查看公告,学生信息,个人信息,学生教学评价,学生提交资料,课堂满意度调查,
     密码修改,教学质量评价
     */
-    private static HashMap<String,ArrayList<String>> score_inquiryMap = new HashMap<>();
-
-
-    private final static String personDataUrl = "xsgrxx.aspx?xh=03161257&xm=杨豪&gnmkdm=N121501";
-    private final static String score_inquiry = "xscjcx.aspx?xh=03161257&xm=杨豪&gnmkdm=N121605";
-    private final static String Students_personal_schedules = "xskbcx.aspx?xh=03161257&xm=杨豪&gnmkdm=N121603";
-    private final static String student_information = "lw_xsxx.aspx?xh=03161257&xm=杨豪&gnmkdm=N121902";
+    private static ArrayList<ArrayList<String>> score_inquirylist = new ArrayList<>();
+    private static HashMap<String,ArrayList<String>> stu_per_schedules = new HashMap<>();
 
 
     /**
@@ -82,6 +77,21 @@ public class OkHttpRequest {
     private final static String Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
     private final static String Cache_Control = "max-age=0";
 
+    /**
+     * 登陆之前清空数据，初始化
+     */
+    public static void initdata(){
+        htmlData = null;
+
+        identifying_code = null;
+        isgetstu_per_schedules = false;
+        isgetCookie = false;
+        isGetIdentifying_Code = false;
+        isLoginSuccessful = -1;
+        isgetPersonDta = false;
+        isgetscore_inquiry = false;
+
+    }
 
 
     /**
@@ -178,6 +188,7 @@ public class OkHttpRequest {
      */
     public static void requestOkhttpforLoginhtml(final String email,final String password,final String checkbox){
         isLoginSuccessful = -1;
+        initdata();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -231,7 +242,6 @@ public class OkHttpRequest {
                                 isLoginSuccessful = 2;
                             }
 
-
                         }
                     }
                 });
@@ -259,8 +269,27 @@ public class OkHttpRequest {
      * 获取后续网页网址数据
      * @return
      */
-    public static HashMap<String,String> getWebAdressData(){
-        return (urlDataMap = ParseData.parse_01_HtmlToMap(htmlData));
+    public static void getInitWebAdressData(){
+        urlDataMap = ParseData.parse_01_HtmlToMap(htmlData);
+    }
+
+    /**
+     * 获取学生名字
+     * @return
+     */
+    public static String getStudentName(){
+
+        Elements select = htmlData.select("body[class=mainbody]").select("div[class=info]");
+        //欢迎您： 杨豪同学 退出
+        StringBuilder s = new StringBuilder(select.text());
+        for(int i =0;i<5;i++){
+            s.deleteCharAt(0);
+        }
+        for(int i =0;i<3;i++){
+            s.deleteCharAt(s.length() - 1);
+        }
+        Log.d("-------",s.toString());
+        return s.toString();
     }
 
 
@@ -269,14 +298,14 @@ public class OkHttpRequest {
      */
     public static void requestOkhttpforPersonData(){
         isgetPersonDta = false;
-        Map<String ,String> map = ParseData.getDataformUrl(personDataUrl);
+        Map<String ,String> map = ParseData.getDataformUrl(urlDataMap.get("个人信息"));
         FormBody formBody = new FormBody.Builder()
                 .add("gnmkdm",map.get("gnmkdm"))
                 .add("xh",map.get("xh"))
                 .add("xm",map.get("xm"))
                 .build();
         Request request = new Request.Builder()
-                .url(HostUrl+personDataUrl)
+                .url(HostUrl+urlDataMap.get("个人信息"))
                 .header("Host",Host)
                 .header("Accept",Accept)
                 .header("Accept-Language",Accept_Language)
@@ -296,28 +325,35 @@ public class OkHttpRequest {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
+                    isgetPersonDta = false;
                     Document document = Jsoup.parse(response.body().string());
-                    Log.d("0-----------------","开始解析数据");
-                    Log.d("22222222222222222",ParseData.parse_02_personDataHtmlTOMap(document).toString());
+                    personData = ParseData.parse_02_personDataHtmlTOMap(document);
+                    isgetPersonDta = true;
                 }
             }
         });
     }
 
+    public static boolean isIsgetPersonDta() {
+        return isgetPersonDta;
+    }
 
+    public static HashMap<String, String> getPersonData() {
+        return personData;
+    }
 
     /**
      * 获取个人课表页面
      * */
     public static void requestOkhttpforStudents_personal_schedules(){
-        Map<String,String> map = ParseData.getDataformUrl(Students_personal_schedules);
+        Map<String,String> map = ParseData.getDataformUrl(urlDataMap.get("学生个人课表"));
         FormBody formBody = new FormBody.Builder()
                 .add("xh",map.get("xh"))
                 .add("xm",map.get("xm"))
                 .add("gnmkdm",map.get("gnmkdm"))
                 .build();
         Request request = new Request.Builder()
-                .url(HostUrl + Students_personal_schedules)
+                .url(HostUrl + urlDataMap.get("学生个人课表"))
                 .header("Host",Host)
                 .header("Accept",Accept)
                 .header("Accept-Language",Accept_Language)
@@ -326,6 +362,7 @@ public class OkHttpRequest {
                 .header("Cookie",cookie)
                 .header("Connection",Connection)
                 .header("Upgrade-Insecure-Requests","1")
+                .post(formBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -337,28 +374,36 @@ public class OkHttpRequest {
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
                     Document document = Jsoup.parse(response.body().string());
-                    Map<String,ArrayList<String>> map = ParseData.parse_02_Stu_per_schHtmlToMap(document);
+                    stu_per_schedules = ParseData.parse_02_Stu_per_schHtmlToMap(document);
+                    isgetstu_per_schedules = true;
                 }
             }
         });
     }
 
+    public static boolean isgetstu_per_schedules() {
+        return isgetstu_per_schedules;
+    }
+
+    public static HashMap<String, ArrayList<String>> getStu_per_schedules() {
+        return stu_per_schedules;
+    }
     /**
      * 获取成绩页面
      */
     /**
      * 查询成绩时的数据
      * */
-    private static boolean isgetscore_inquiry = false;
+
     public static void requestOkhttpforscore_inquiry(){
-        Map<String,String> map = ParseData.getDataformUrl(score_inquiry);
+        Map<String,String> map = ParseData.getDataformUrl(urlDataMap.get("成绩查询"));
         FormBody formBody = new FormBody.Builder()
                 .add("xh",map.get("xh"))
                 .add("xm",map.get("xm"))
                 .add("gnmkdm",map.get("gnmkdm"))
                 .build();
         Request request = new Request.Builder()
-                .url(HostUrl+score_inquiry)
+                .url(HostUrl+urlDataMap.get("成绩查询"))
                 .header("Host",Host)
                 .header("Accept",Accept)
                 .header("Accept-Language",Accept_Language)
@@ -390,8 +435,8 @@ public class OkHttpRequest {
      * 成绩界面——02 请求
      * @param value
      */
-    public static void requestOkhttpforscore_inquiry_02(String value){
-        Map<String,String> map = ParseData.getDataformUrl(score_inquiry);
+    private static void requestOkhttpforscore_inquiry_02(String value){
+        Map<String,String> map = ParseData.getDataformUrl(urlDataMap.get("成绩查询"));
         FormBody formBody = new FormBody.Builder()
                 .add("xh",map.get("xh"))
                 .add("xm",map.get("xm"))
@@ -405,7 +450,7 @@ public class OkHttpRequest {
                 .add("btn_zcj","%C0%FA%C4%EA%B3%C9%BC%A8")
                 .build();
         Request request = new Request.Builder()
-                .url(HostUrl+score_inquiry)
+                .url(HostUrl+urlDataMap.get("成绩查询"))
                 .header("Host",Host)
                 .header("Accept",Accept)
                 .header("Accept-Language",Accept_Language)
@@ -427,7 +472,7 @@ public class OkHttpRequest {
                 Headers headers = response.headers();
                 Log.d("获取成绩的header00000======",headers.toString());
                 Document document = Jsoup.parse(response.body().string());
-                score_inquiryMap = ParseData.parse_02_02_score_inquiryHtmlTOMap(document);
+                score_inquirylist = ParseData.parse_02_02_score_inquiryHtmlTOMap(document);
                 isgetscore_inquiry = true;
             }
         });
@@ -445,7 +490,7 @@ public class OkHttpRequest {
      * 获取成绩
      * @return
      */
-    public static HashMap<String, ArrayList<String>> getScore_inquiryMap() {
-        return score_inquiryMap;
+    public static ArrayList<ArrayList<String>> getScore_inquiryList() {
+        return score_inquirylist;
     }
 }

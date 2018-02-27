@@ -1,4 +1,4 @@
-package com.example.okhttp;
+package com.example.okhttp.tool;
 
 import android.util.Log;
 
@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by 杨豪 on 2018/2/25.
@@ -168,30 +169,24 @@ public class ParseData {
      * @param document
      * @return map键值对，比如年份——{}  课程——{}...
      */
-    public static HashMap<String,ArrayList<String>> parse_02_02_score_inquiryHtmlTOMap(Document document){
-        HashMap<String,ArrayList<String>> map = new HashMap<>();
+    public static ArrayList<ArrayList<String>> parse_02_02_score_inquiryHtmlTOMap(Document document){
+        ArrayList<ArrayList<String>> lists = new ArrayList<>();
         Elements elements = document.select("body").select("div[class=main_box]")
                 .select("div[id=divNotPs]").select("table[id=Datagrid1]").select("tbody").select("tr");
         boolean isonceget = true;
-        ArrayList<String> key = new ArrayList<>();
         for(Element e:elements){
             if(isonceget){
-                Elements onceget = e.select("td");
-                for(Element ss : onceget){
-                    key.add(ss.text());
-                }
-                for(String s: key ){
-                    map.put(s,new ArrayList<String>());
-                }
                 isonceget = false;
             }else {
                 Elements element = e.select("td");
-                for(int i = 0;i < key.size() ; i++){
-                    map.get(key.get(i)).add(element.get(i).text());
+                ArrayList<String> list = new ArrayList<>();
+                for(Element e1:element){
+                    list.add(e1.text());
                 }
+                lists.add(list);
             }
-
         }
-        return map;
+
+        return lists;
     }
 }
