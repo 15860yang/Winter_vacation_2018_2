@@ -9,24 +9,48 @@
 
     <include layout="@layout/toolbar"
         android:id="@+id/forthActivityToolbar"/>
+
     <View
         android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+        <TextView
+            android:id="@+id/select_kebiao_text"
+            android:text="012"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/select_kebiao_Spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"></android.support.v7.widget.AppCompatSpinner>
+
+    </LinearLayout>
+
+    <View
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
     <!--星期头-->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
 
         <TextView
             android:gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_height="match_parent" />
-        <view
+        <View
             android:background="#ffffff"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
@@ -36,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
-        <view
+        <View
             android:background="#ffffff"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
@@ -46,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
-        <view
+        <View
             android:background="#ffffff"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
@@ -56,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
-        <view
+        <View
             android:background="#ffffff"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
@@ -66,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
-        <view
+        <View
             android:background="#ffffff"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
@@ -76,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
-        <view
+        <View
             android:background="#ffffff"
             android:layout_width="1dp"
             android:layout_height="match_parent"/>
@@ -102,13 +126,19 @@
 
             <!--上午下午边框-->
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:layout_width="0dp"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
                 <TextView
-                    android:gravity="center"
-                    android:text="上午"
+                    android:gravity="bottom|center"
+                    android:text="上"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:gravity="center|top"
+                    android:text="午"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -117,8 +147,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
                 <TextView
-                    android:gravity="center"
-                    android:text="上午"
+                    android:gravity="center|bottom"
+                    android:text="下"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:gravity="center|top"
+                    android:text="午"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -141,6 +177,10 @@
                     android:layout_height="0dp"
                     android:layout_weight="1">
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Mon_01"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -150,6 +190,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thu_01"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -160,6 +204,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Wed_01"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -169,6 +217,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thr_01"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -178,6 +230,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Fir_01"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -196,6 +252,10 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Mon_02"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -205,6 +265,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thu_02"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -215,6 +279,10 @@
                         android:layout_height="match_parent"/>
 
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Wed_02"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -224,6 +292,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thr_02"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -233,6 +305,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Fir_02"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -250,6 +326,10 @@
                     android:layout_height="0dp"
                     android:layout_weight="1">
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Mon_03"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -259,6 +339,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thu_03"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -269,6 +353,10 @@
                         android:layout_height="match_parent"/>
 
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Wed_03"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -278,6 +366,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thr_03"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -287,6 +379,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Fir_03"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -305,6 +401,10 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Mon_04"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -314,6 +414,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thu_04"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -324,6 +428,10 @@
                         android:layout_height="match_parent"/>
 
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Wed_04"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -333,6 +441,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Thr_04"
                         android:layout_weight="1"
                         android:layout_width="0dp"
@@ -342,6 +454,10 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
                     <TextView
+                        android:layout_marginTop="3dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:scrollbars="vertical"
                         android:id="@+id/weekof_Fir_04"
                         android:layout_weight="1"
                         android:layout_width="0dp"

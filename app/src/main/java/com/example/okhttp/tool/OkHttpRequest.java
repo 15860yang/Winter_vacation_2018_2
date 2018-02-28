@@ -26,6 +26,7 @@ import okhttp3.Response;
 public class OkHttpRequest {
     private static String cookie = null;
     private static String __VIEWSTATE = null;
+    private static String __VIEWSTATE_ofgetScore = null;
 
     /**
      * 声明静态变量
@@ -80,7 +81,7 @@ public class OkHttpRequest {
     /**
      * 登陆之前清空数据，初始化
      */
-    public static void initdata(){
+    private static void initdata(){
         htmlData = null;
 
         identifying_code = null;
@@ -90,6 +91,7 @@ public class OkHttpRequest {
         isLoginSuccessful = -1;
         isgetPersonDta = false;
         isgetscore_inquiry = false;
+        __VIEWSTATE_ofgetScore = null;
 
     }
 
@@ -345,7 +347,7 @@ public class OkHttpRequest {
     /**
      * 获取个人课表页面
      * */
-    public static void requestOkhttpforStudents_personal_schedules(){
+    public static void requestOkhttpforStu_per_sch(){
         Map<String,String> map = ParseData.getDataformUrl(urlDataMap.get("学生个人课表"));
         FormBody formBody = new FormBody.Builder()
                 .add("xh",map.get("xh"))
@@ -374,6 +376,7 @@ public class OkHttpRequest {
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
                     Document document = Jsoup.parse(response.body().string());
+                    __VIEWSTATE_ofgetScore = ParseData.parse_02_Stu_per_schHtmlTo__VIEWSTATE(document);
                     stu_per_schedules = ParseData.parse_02_Stu_per_schHtmlToMap(document);
                     isgetstu_per_schedules = true;
                 }
@@ -388,13 +391,13 @@ public class OkHttpRequest {
     public static HashMap<String, ArrayList<String>> getStu_per_schedules() {
         return stu_per_schedules;
     }
+
+
     /**
      * 获取成绩页面
-     */
-    /**
      * 查询成绩时的数据
-     * */
-
+     *
+     */
     public static void requestOkhttpforscore_inquiry(){
         Map<String,String> map = ParseData.getDataformUrl(urlDataMap.get("成绩查询"));
         FormBody formBody = new FormBody.Builder()

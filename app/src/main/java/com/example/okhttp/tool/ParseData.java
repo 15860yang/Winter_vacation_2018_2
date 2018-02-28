@@ -102,6 +102,17 @@ public class ParseData {
     }
 
     /**
+     * 获取其他课表的重要参数__VIEWSTATE
+     * @param document
+     * @return
+     */
+    public static String parse_02_Stu_per_schHtmlTo__VIEWSTATE(Document document){
+        return document.select("body").select("input[name=__VIEWSTATE]").attr("value");
+    }
+
+
+
+    /**
      * 解析课表页面信息
      * @param htmlData
      * @return 节数和这节啥课的键值对
@@ -114,7 +125,7 @@ public class ParseData {
         ArrayList<String> headAll = new ArrayList<>();
         ArrayList<String> realyear = new ArrayList<>();
         ArrayList<String> realnum = new ArrayList<>();
-        int i = 1;
+        int i;
 
         Elements elem1 = elements2.get(0).select("td").select("select");
 

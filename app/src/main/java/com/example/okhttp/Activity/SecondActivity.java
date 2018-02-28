@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.okhttp.tool.OkHttpRequest;
 import com.example.okhttp.R;
@@ -143,7 +142,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void run() {
                 if(!OkHttpRequest.isgetstu_per_schedules()){
-                    OkHttpRequest.requestOkhttpforStudents_personal_schedules();
+                    OkHttpRequest.requestOkhttpforStu_per_sch();
                 }
             }
         }).start();
