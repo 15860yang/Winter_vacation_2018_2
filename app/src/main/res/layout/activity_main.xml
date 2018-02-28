@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#90e966"
+    android:background="#C5C1AA"
     tools:context="com.example.okhttp.Activity.MainActivity">
+
+
+
 
     <LinearLayout
         android:layout_marginTop="120dp"
@@ -13,7 +16,8 @@
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -77,5 +81,8 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

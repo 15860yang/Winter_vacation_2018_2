@@ -379,10 +379,8 @@
             android:layout_height="0dp"
             android:layout_weight="1">
             <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-            <Button
+                android:text="退出"
+                android:id="@+id/backtoLogin"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>

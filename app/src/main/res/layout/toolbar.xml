@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     app:title="学校一掌通"
+    android:background="#737373"
     app:subtitle="个人信息"
     >
     <TextView

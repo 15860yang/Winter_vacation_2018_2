@@ -33,6 +33,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation files('libs/jsoup-1.8.1.jar')
     compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.carson_ho:Kawaii_LoadingView:1.0.0'
 
 
 }
