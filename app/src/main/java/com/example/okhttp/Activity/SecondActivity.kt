@@ -111,6 +111,11 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 
     /**
      * 查询成绩

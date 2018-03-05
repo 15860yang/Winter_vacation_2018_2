@@ -151,9 +151,7 @@ object OkHttpRequest {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-
             }
-
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
@@ -164,9 +162,13 @@ object OkHttpRequest {
                     val select = document.select("body[class=login_bg]").select("input")
                     __VIEWSTATE = select.attr("value")
                     isgetCookie = true
+                    Log.d("-------------","获取cookie完毕")
                 }
             }
         })
+    }
+    fun isgetcookie():Boolean{
+        return isgetCookie
     }
 
 
@@ -174,9 +176,15 @@ object OkHttpRequest {
      * 获取验证码
      */
     fun requestOkhttpforIdentifying_Code() {
-        isGetIdentifying_Code = false
-        while (!isgetCookie);
+
         Thread(Runnable {
+
+            isGetIdentifying_Code = false
+            Log.d("===========","112221222222222")
+            while (!isgetCookie);
+            Log.d("===========","112221222222222")
+
+
             val request = Request.Builder()
                     .url(HostUrl + checkboxUrl)
                     .header("Cookie", cookie!!)

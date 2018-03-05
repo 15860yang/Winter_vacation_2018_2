@@ -1,13 +1,15 @@
 package com.example.okhttp.Activity
 
-
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -17,7 +19,6 @@ import android.widget.Toast
 
 import com.example.okhttp.tool.OkHttpRequest
 import com.example.okhttp.R
-import scut.carson_ho.kawaii_loadingview.Kawaii_LoadingView
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val SETCHECKBOX = 1
     private val LOGINFAILED = 2//登陆失败
     private val LOGINSUCCESS = 3//登陆成功
-
+    private val STARTNEXTACTIVITY = 4//开始下一个页面
 
     @SuppressLint("HandlerLeak")
     internal var handler: Handler = object : Handler() {
@@ -46,19 +47,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 LOGINFAILED -> {
                     Toast.makeText(this@MainActivity, "登陆失败", Toast.LENGTH_SHORT).show()
+                    login!!.isClickable = true
+                    login!!.setBackgroundColor(Color.BLUE)
                 }
                 LOGINSUCCESS -> {
-
                     Thread(Runnable {
                         OkHttpRequest.getInitWebAdressData()
                         OkHttpRequest.requestOkhttpforPersonData()
                         while (!OkHttpRequest.isIsgetPersonDta);
-                        val intent = Intent(this@MainActivity, SecondActivity::class.java)
-                        startActivity(intent)
+                        Thread(Runnable {
+                            startnextActivity()
+                            Log.d("-------------","登陆成功")
+                        }).start()
                     }).start()
+                }
+                STARTNEXTACTIVITY -> {
+                    login!!.setBackgroundColor(Color.BLUE)
+                    login!!.isClickable = true
+                    var intent = Intent(this@MainActivity,SecondActivity::class.java)
+                    Log.d("---------","登陆成功，开始下一个界面")
+                    startActivityForResult(intent,1)
                 }
             }
         }
+    }
+
+    private fun startnextActivity() {
+        var me : Message = Message.obtain()
+        me.what = STARTNEXTACTIVITY
+        handler!!.sendMessage(me)
     }
 
     override public fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +106,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.login -> Login()
-            R.id.image -> getcheckbox()
+            R.id.image -> {
+                Log.d("-------------","获取验证码")
+                getcheckbox()
+            }
         }
     }
 
@@ -101,6 +121,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             OkHttpRequest.requestOkhttpforIdentifying_Code()
             while (!OkHttpRequest.isisGetIdentifying_Code());
             val bts = OkHttpRequest.identifying_code
+            Log.d("----------","获取到验证码----$bts")
             val message = Message.obtain()
             message.obj = bts
             message.what = SETCHECKBOX
@@ -125,7 +146,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "请输入正确的验证码!", Toast.LENGTH_SHORT).show()
             return
         }
-
+        login!!.setBackgroundColor(Color.GRAY)
+        login!!.isClickable = false
         Thread(Runnable {
             OkHttpRequest.requestOkhttpforLoginhtml(email!!.text.toString(),
                     password!!.text.toString(), checkbox!!.text.toString())
@@ -139,6 +161,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             handler.sendMessage(message)
         }).start()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("------------","来到这里1111111111111")
+        when (requestCode){
+            1 -> {
+                Log.d("------------","来到这里")
+
+                Thread(Runnable {
+
+                    OkHttpRequest.InitCookieData()
+                    var boolean = true
+                    while (boolean){
+                        if(OkHttpRequest.isgetcookie()){
+                            boolean = false
+                        }
+                        Log.d("----","还没有成功获取cookie")
+                        Thread.sleep(10)
+                    }
+                }).start()
+                getcheckbox()
+            }
+        }
     }
 
 }
