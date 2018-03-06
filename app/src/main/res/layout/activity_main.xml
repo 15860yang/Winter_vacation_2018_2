@@ -9,6 +9,19 @@
 
 
 
+    <LinearLayout
+        android:id="@+id/loadingBar"
+        android:visibility="invisible"
+        android:background="#e0000000"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_marginTop="70dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="120dp"
@@ -29,7 +42,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <EditText
-                android:text="03161257"
+                android:maxLines="1"
+                android:maxLength="12"
+                android:text="02161036"
                 android:id="@+id/email"
                 android:layout_width="0dp"
                 android:layout_weight="2.5"
@@ -42,15 +57,23 @@
             <TextView
                 android:text="密码"
                 android:gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="1.4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <EditText
-                android:text="yanghao.0"
+                android:maxLines="1"
+                android:maxLength="16"
+                android:text="ZXT2316376"
                 android:id="@+id/password"
                 android:layout_width="0dp"
                 android:layout_weight="2.5"
                 android:layout_height="wrap_content" />
+            <Switch
+                android:checked="false"
+                android:id="@+id/passwordswitch"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,6 +85,8 @@
                 android:text="验证码"
                 android:layout_height="wrap_content" />
             <EditText
+                android:maxLines="1"
+                android:maxLength="4"
                 android:id="@+id/checkbox"
                 android:layout_width="0dp"
                 android:layout_weight="2.5"

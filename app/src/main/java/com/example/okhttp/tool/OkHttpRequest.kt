@@ -129,14 +129,16 @@ object OkHttpRequest {
         isIsgetPersonDta = false
         isgetscore_inquiry = false
         __VIEWSTATE_ofgetScore = null
-
     }
-
 
     /**
      * 初始化cookie  和  __VIEWSTATE
      */
     fun InitCookieData() {
+
+        //先初始化数据，再初始化cookie和  __VIEWSTATE
+        initdata()
+
         val request = Request.Builder()
                 .url(HostUrl)
                 .addHeader("Host", Host)
@@ -171,20 +173,14 @@ object OkHttpRequest {
         return isgetCookie
     }
 
-
     /**
      * 获取验证码
      */
     fun requestOkhttpforIdentifying_Code() {
+        isGetIdentifying_Code = false
 
         Thread(Runnable {
-
-            isGetIdentifying_Code = false
-            Log.d("===========","112221222222222")
             while (!isgetCookie);
-            Log.d("===========","112221222222222")
-
-
             val request = Request.Builder()
                     .url(HostUrl + checkboxUrl)
                     .header("Cookie", cookie!!)
@@ -262,16 +258,16 @@ object OkHttpRequest {
                     if (response.isSuccessful) {
 
                         val headers = response.headers()
-                        Log.d("登陆成功的Header---", headers.toString())
                         val document = Jsoup.parse(response.body()!!.string())
-                        //                            Log.d("登陆成功的源码---",document.toString());
                         htmlData = document
-                        Log.d("=================", "----------------------")
-                        if (headers.get("Content-Length")!!.toString().compareTo("9000") > 0) {
+                        var l:Int = headers.get("Content-Length")!!.toString().toInt()
+                        if (l > 7000) {
                             Log.d("====", "登陆成功")
                             isLoginSuccessful = 1
                         } else {
-                            isLoginSuccessful = 2
+                            isLoginSuccessful = 2//登陆失败
+                            isgetCookie = true
+
                         }
 
                     }
@@ -376,7 +372,6 @@ object OkHttpRequest {
     /**
      * 获取成绩页面
      * 查询成绩时的数据
-     *
      */
     fun requestOkhttpforscore_inquiry() {
         val map = ParseData.getDataformUrl(urlDataMap["成绩查询"]!!)

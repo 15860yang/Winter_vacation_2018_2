@@ -9,13 +9,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 import com.example.okhttp.tool.OkHttpRequest
 import com.example.okhttp.R
@@ -30,6 +27,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var imageView: ImageView? = null
     private var checkbox: EditText? = null
     private var textView: TextView? = null
+    private var passwordswitch: Switch? = null
+    private var loadingBar: LinearLayout? = null
 
     private val SETCHECKBOX = 1
     private val LOGINFAILED = 2//登陆失败
@@ -47,8 +46,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 LOGINFAILED -> {
                     Toast.makeText(this@MainActivity, "登陆失败", Toast.LENGTH_SHORT).show()
-                    login!!.isClickable = true
-                    login!!.setBackgroundColor(Color.BLUE)
+                    afterlogin()
+                    getcheckbox()
                 }
                 LOGINSUCCESS -> {
                     Thread(Runnable {
@@ -67,9 +66,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     var intent = Intent(this@MainActivity,SecondActivity::class.java)
                     Log.d("---------","登陆成功，开始下一个界面")
                     startActivityForResult(intent,1)
+                    afterlogin()
                 }
             }
         }
+    }
+
+    private fun afterlogin() {
+        login!!.setBackgroundColor(Color.BLUE)
+        login!!.isClickable = true
+        loadingBar!!.visibility = View.INVISIBLE
+        email!!.isEnabled = true
+        password!!.isEnabled = true
+        checkbox!!.isEnabled = true
+        imageView!!.isClickable = true
+        passwordswitch!!.isClickable = true
     }
 
     private fun startnextActivity() {
@@ -89,12 +100,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         email = findViewById(R.id.email)
         password = findViewById(R.id.password)
+        password!!.inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+        passwordswitch = findViewById(R.id.passwordswitch)
+        passwordswitch!!.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                //明文
+                password!!.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            }else{
+                //密文
+                password!!.inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+            }
+        }
+        loadingBar = findViewById(R.id.loadingBar)
         imageView = findViewById(R.id.image)
         checkbox = findViewById(R.id.checkbox)
         textView = findViewById(R.id.text)
 
         login!!.setOnClickListener(this)
         imageView!!.setOnClickListener(this)
+
 
 
 
@@ -146,8 +170,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "请输入正确的验证码!", Toast.LENGTH_SHORT).show()
             return
         }
-        login!!.setBackgroundColor(Color.GRAY)
-        login!!.isClickable = false
+        whenlogin()
         Thread(Runnable {
             OkHttpRequest.requestOkhttpforLoginhtml(email!!.text.toString(),
                     password!!.text.toString(), checkbox!!.text.toString())
@@ -163,26 +186,33 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }).start()
     }
 
+    private fun whenlogin() {
+        login!!.setBackgroundColor(Color.GRAY)
+        login!!.isClickable = false
+        loadingBar!!.visibility = View.VISIBLE
+        email!!.isEnabled = false
+        password!!.isEnabled = false
+        checkbox!!.isEnabled = false
+        imageView!!.isClickable = false
+        passwordswitch!!.isClickable = false
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("------------","来到这里1111111111111")
         when (requestCode){
             1 -> {
-                Log.d("------------","来到这里")
-
                 Thread(Runnable {
-
                     OkHttpRequest.InitCookieData()
                     var boolean = true
                     while (boolean){
                         if(OkHttpRequest.isgetcookie()){
                             boolean = false
                         }
-                        Log.d("----","还没有成功获取cookie")
-                        Thread.sleep(10)
                     }
                 }).start()
                 getcheckbox()
+                passwordswitch!!.isChecked = false
+                password!!.inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
             }
         }
     }
