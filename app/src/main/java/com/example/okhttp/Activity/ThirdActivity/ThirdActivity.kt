@@ -1,4 +1,4 @@
-package com.example.okhttp.Activity
+package com.example.okhttp.Activity.ThirdActivity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

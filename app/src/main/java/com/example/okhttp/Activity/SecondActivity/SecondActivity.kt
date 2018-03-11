@@ -1,4 +1,4 @@
-package com.example.okhttp.Activity
+package com.example.okhttp.Activity.SecondActivity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,11 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.example.okhttp.Activity.ForthActivity.ForthActivity
+import com.example.okhttp.Activity.ThirdActivity.ThirdActivity
 
 import com.example.okhttp.tool.OkHttpRequest
 import com.example.okhttp.R
-
-import java.util.HashMap
 
 /**
  * Created by 杨豪 on 2018/2/26.

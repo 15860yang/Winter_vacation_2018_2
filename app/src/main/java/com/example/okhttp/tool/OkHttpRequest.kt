@@ -39,7 +39,9 @@ object OkHttpRequest {
      * @return
      */
     var identifying_code: ByteArray? = null
-        private set
+        fun getidentifying_code() :ByteArray{
+            return identifying_code!!
+        }
 
     /**
      * 状态声明
@@ -308,21 +310,24 @@ object OkHttpRequest {
                 .header("Connection", Connection)
                 .post(formBody)
                 .build()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
+        Thread(Runnable {
+            getInitWebAdressData()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
 
-            }
-
-            @Throws(IOException::class)
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    isIsgetPersonDta = false
-                    val document = Jsoup.parse(response.body()!!.string())
-                    personData = ParseData.parse_02_personDataHtmlTOMap(document)
-                    isIsgetPersonDta = true
                 }
-            }
-        })
+
+                @Throws(IOException::class)
+                override fun onResponse(call: Call, response: Response) {
+                    if (response.isSuccessful) {
+                        isIsgetPersonDta = false
+                        val document = Jsoup.parse(response.body()!!.string())
+                        personData = ParseData.parse_02_personDataHtmlTOMap(document)
+                        isIsgetPersonDta = true
+                    }
+                }
+            })
+        }).start()
     }
 
     /**

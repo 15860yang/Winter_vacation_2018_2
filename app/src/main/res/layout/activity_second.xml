@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#669999"
     android:orientation="vertical"
-    tools:context="com.example.okhttp.Activity.SecondActivity">
+    tools:context="com.example.okhttp.Activity.SecondActivity.SecondActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/secondtoobar"/>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.okhttp.Activity.ThirdActivity">
+    tools:context="com.example.okhttp.Activity.ThirdActivity.ThirdActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/thirdtoobar"

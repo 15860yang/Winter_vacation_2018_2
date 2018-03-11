@@ -1,11 +1,10 @@
-package com.example.okhttp.Activity
+package com.example.okhttp.Activity.ForthActivity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.AppCompatSpinner
 import android.support.v7.widget.Toolbar
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView

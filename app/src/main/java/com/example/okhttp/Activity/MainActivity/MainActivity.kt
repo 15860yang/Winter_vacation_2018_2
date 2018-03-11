@@ -1,7 +1,6 @@
-package com.example.okhttp.Activity
+package com.example.okhttp.Activity.MainActivity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -13,12 +12,13 @@ import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.example.okhttp.Activity.SecondActivity.SecondActivity
 
 import com.example.okhttp.tool.OkHttpRequest
 import com.example.okhttp.R
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(),IMainVIew ,View.OnClickListener {
 
 
     private var login: Button? = null
@@ -30,10 +30,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var passwordswitch: Switch? = null
     private var loadingBar: LinearLayout? = null
 
+    private val SHOWERROR = 5
+    private val SHOWORUNSHOWPROGRESS:Int = 6
+
     private val SETCHECKBOX = 1
-    private val LOGINFAILED = 2//登陆失败
     private val LOGINSUCCESS = 3//登陆成功
-    private val STARTNEXTACTIVITY = 4//开始下一个页面
+
+    private var presenter:IMainPresenter? = null
 
     @SuppressLint("HandlerLeak")
     internal var handler: Handler = object : Handler() {
@@ -43,36 +46,37 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 SETCHECKBOX -> {
                         val res = msg.obj as ByteArray
                         imageView!!.setImageBitmap(BitmapFactory.decodeByteArray(res, 0, res.size))
-                    }
-                LOGINFAILED -> {
-                    Toast.makeText(this@MainActivity, "登陆失败", Toast.LENGTH_SHORT).show()
-                    afterlogin()
-                    getcheckbox()
                 }
+
                 LOGINSUCCESS -> {
-                    Thread(Runnable {
-                        OkHttpRequest.getInitWebAdressData()
-                        OkHttpRequest.requestOkhttpforPersonData()
-                        while (!OkHttpRequest.isIsgetPersonDta);
-                        Thread(Runnable {
-                            startnextActivity()
-                            Log.d("-------------","登陆成功")
-                        }).start()
-                    }).start()
-                }
-                STARTNEXTACTIVITY -> {
-                    login!!.setBackgroundColor(Color.BLUE)
-                    login!!.isClickable = true
-                    var intent = Intent(this@MainActivity,SecondActivity::class.java)
+                    afterLogin()
+                    var intent = Intent(this@MainActivity, SecondActivity::class.java)
                     Log.d("---------","登陆成功，开始下一个界面")
                     startActivityForResult(intent,1)
-                    afterlogin()
+                }
+                SHOWERROR -> {
+                    var s:String = msg.obj as String
+                    Toast.makeText(this@MainActivity,s,Toast.LENGTH_SHORT).show()
+                }
+                SHOWORUNSHOWPROGRESS -> {
+                    var a:Boolean = msg.obj as Boolean
+                    if(a){
+                       whenlogin()
+                    }else{
+                        afterLogin()
+                    }
                 }
             }
         }
     }
 
-    private fun afterlogin() {
+    override fun loginSuccess() {
+        var me : Message = Message.obtain()
+        me.what = this.LOGINSUCCESS
+        handler!!.sendMessage(me)
+    }
+
+    private fun afterLogin() {
         login!!.setBackgroundColor(Color.BLUE)
         login!!.isClickable = true
         loadingBar!!.visibility = View.INVISIBLE
@@ -81,17 +85,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         checkbox!!.isEnabled = true
         imageView!!.isClickable = true
         passwordswitch!!.isClickable = true
+        login!!.setBackgroundColor(Color.BLUE)
+        login!!.isClickable = true
     }
 
-    private fun startnextActivity() {
-        var me : Message = Message.obtain()
-        me.what = STARTNEXTACTIVITY
-        handler!!.sendMessage(me)
-    }
 
     override public fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        presenter = MainPresenter(this)
+
         InitView()
     }
 
@@ -119,71 +122,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         login!!.setOnClickListener(this)
         imageView!!.setOnClickListener(this)
 
-
-
-
         //初始化cookie和初始化验证码
-        OkHttpRequest.InitCookieData()
-        getcheckbox()
+        presenter!!.InitCookieData()
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.login -> Login()
+            R.id.login -> {
+                presenter!!.login(email!!.text.toString(),
+                        password!!.text.toString(), checkbox!!.text.toString())
+            }
             R.id.image -> {
                 Log.d("-------------","获取验证码")
-                getcheckbox()
+                presenter!!.getchexkbox()
             }
         }
-    }
-
-    /**
-     * 获取验证码
-     */
-    fun getcheckbox() {
-        Thread(Runnable {
-            OkHttpRequest.requestOkhttpforIdentifying_Code()
-            while (!OkHttpRequest.isisGetIdentifying_Code());
-            val bts = OkHttpRequest.identifying_code
-            Log.d("----------","获取到验证码----$bts")
-            val message = Message.obtain()
-            message.obj = bts
-            message.what = SETCHECKBOX
-            handler.sendMessage(message)
-        }).start()
-    }
-
-    /**
-     * 登陆函数
-     */
-    fun Login() {
-
-        if (email!!.text.toString().trim { it <= ' ' }.length <= 0) {
-            Toast.makeText(this, "请输入正确的账号!", Toast.LENGTH_SHORT).show()
-            return
-        }
-        if (password!!.text.toString().trim { it <= ' ' }.length <= 0) {
-            Toast.makeText(this, "请输入正确的密码!", Toast.LENGTH_SHORT).show()
-            return
-        }
-        if (checkbox!!.text.toString().trim { it <= ' ' }.length <= 0) {
-            Toast.makeText(this, "请输入正确的验证码!", Toast.LENGTH_SHORT).show()
-            return
-        }
-        whenlogin()
-        Thread(Runnable {
-            OkHttpRequest.requestOkhttpforLoginhtml(email!!.text.toString(),
-                    password!!.text.toString(), checkbox!!.text.toString())
-            while (OkHttpRequest.isLoginSuccessful < 0);
-            val message = Message.obtain()
-            if (OkHttpRequest.isLoginSuccessful == 2) {
-                message.what = LOGINFAILED//登陆失败
-            }
-            if (OkHttpRequest.isLoginSuccessful == 1) {
-                message.what = LOGINSUCCESS//登陆成功
-            }
-            handler.sendMessage(message)
-        }).start()
     }
 
     private fun whenlogin() {
@@ -195,6 +148,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         checkbox!!.isEnabled = false
         imageView!!.isClickable = false
         passwordswitch!!.isClickable = false
+    }
+
+    override fun setyanzhengma(yanzhengma: ByteArray) {
+        val message:Message = Message.obtain()
+        message.obj = yanzhengma
+        message.what = SETCHECKBOX
+        handler.sendMessage(message)
+    }
+
+    override fun showError(s: String) {
+        val message:Message = Message.obtain()
+        message.obj = s
+        message.what = SHOWERROR
+        handler.sendMessage(message)
+    }
+
+    override fun showORUnShowProgress(show:Boolean) {
+        val message:Message = Message.obtain()
+        message.obj = show
+        message.what = SHOWORUNSHOWPROGRESS
+        handler.sendMessage(message)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -210,7 +184,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }).start()
-                getcheckbox()
+                presenter!!.getchexkbox()
                 passwordswitch!!.isChecked = false
                 password!!.inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
             }
