@@ -13,11 +13,9 @@ import android.widget.TextView
 
 import com.example.okhttp.R
 import com.example.okhttp.tool.OkHttpRequest
+import java.util.*
 
-import java.util.ArrayList
-import java.util.HashMap
-
-class ForthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class ForthActivity : AppCompatActivity(), IForthView,AdapterView.OnItemSelectedListener {
 
     private var weekof_Mon_01: TextView? = null
     private var weekof_Mon_02: TextView? = null
@@ -44,7 +42,11 @@ class ForthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private var weekof_Fir_03: TextView? = null
     private var weekof_Fir_04: TextView? = null
 
+    private var title :TextView? = null
+
     private var select_kebiao_Spinner: AppCompatSpinner? = null
+
+    private var presenter:IForthPresenter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +54,10 @@ class ForthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setContentView(R.layout.activity_forth)
         initView()
 
-        initData()
+        strings = presenter!!.InitSpinnerData()
+
+        initData(presenter!!.getkebiaoData())
+
     }
 
     fun initView() {
@@ -105,15 +110,20 @@ class ForthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val title :TextView = findViewById(R.id.title)
-        title.text = OkHttpRequest.studentName + ",你好！"
+        title  = findViewById(R.id.title)
+
+        presenter = ForthPresenter(this)
+
+        title!!.text = OkHttpRequest.studentName + ",你好！"
 
         select_kebiao_Spinner = findViewById(R.id.select_kebiao_Spinner)
 
     }
 
-    fun initData() {
-        stu_per_schedules = OkHttpRequest.stu_per_schedules
+
+
+    fun initData(data:HashMap<String,ArrayList<String>>) {
+        stu_per_schedules = data
 
         weekof_Mon_01!!.text = stu_per_schedules["1----"]!!.get(1)
         weekof_Mon_02!!.text = stu_per_schedules["2----"]!!.get(1)
@@ -141,11 +151,6 @@ class ForthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         weekof_Fir_04!!.text = stu_per_schedules["4----"]!!.get(5)
 
 
-        strings = ArrayList()
-        for (s in stu_per_schedules["realtyear"]!!) {
-            strings!!.add(s + "学年度第一学期课表")
-            strings!!.add(s + "学年度第二学期课表")
-        }
         val adapter = ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, strings!!)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

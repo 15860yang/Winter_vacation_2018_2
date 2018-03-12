@@ -7,19 +7,8 @@ import com.example.okhttp.tool.OkHttpRequest
  * Created by 杨豪 on 2018/3/11.
  */
 class MainMdoel :IMainModel{
-    override fun InitData() {
-        OkHttpRequest.InitCookieData()
-        Thread(Runnable {
-            while (OkHttpRequest.isgetcookie());
-            getchexkbox()
-        }).start()
-    }
 
     var presenter:IMainPresenter.LoginListener? = null
-
-    override fun setLoginListener(listener: IMainPresenter.LoginListener) {
-        this.presenter = listener
-    }
 
     private val LOGINFAILED = 2//登陆失败
     private val LOGINSUCCESS = 1//登陆成功
@@ -28,6 +17,18 @@ class MainMdoel :IMainModel{
     val Illeglemail:String = "账号不能为空！"
     val Illeglpassword:String = "密码不能为空！"
     val Illeglcheckbox:String = "验证码不能为空！"
+
+    override fun InitData() {
+        OkHttpRequest.InitCookieData()
+        Thread(Runnable {
+            while (OkHttpRequest.isgetcookie());
+            getchexkbox()
+        }).start()
+    }
+
+    override fun setLoginListener(listener: IMainPresenter.LoginListener) {
+        this.presenter = listener
+    }
 
 
     override fun Login(email: String, password: String, checkbox: String) {

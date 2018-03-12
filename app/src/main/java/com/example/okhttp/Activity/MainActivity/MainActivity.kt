@@ -38,57 +38,6 @@ class MainActivity : AppCompatActivity(),IMainVIew ,View.OnClickListener {
 
     private var presenter:IMainPresenter? = null
 
-    @SuppressLint("HandlerLeak")
-    internal var handler: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when (msg.what) {
-                SETCHECKBOX -> {
-                        val res = msg.obj as ByteArray
-                        imageView!!.setImageBitmap(BitmapFactory.decodeByteArray(res, 0, res.size))
-                }
-
-                LOGINSUCCESS -> {
-                    afterLogin()
-                    var intent = Intent(this@MainActivity, SecondActivity::class.java)
-                    Log.d("---------","登陆成功，开始下一个界面")
-                    startActivityForResult(intent,1)
-                }
-                SHOWERROR -> {
-                    var s:String = msg.obj as String
-                    Toast.makeText(this@MainActivity,s,Toast.LENGTH_SHORT).show()
-                }
-                SHOWORUNSHOWPROGRESS -> {
-                    var a:Boolean = msg.obj as Boolean
-                    if(a){
-                       whenlogin()
-                    }else{
-                        afterLogin()
-                    }
-                }
-            }
-        }
-    }
-
-    override fun loginSuccess() {
-        var me : Message = Message.obtain()
-        me.what = this.LOGINSUCCESS
-        handler!!.sendMessage(me)
-    }
-
-    private fun afterLogin() {
-        login!!.setBackgroundColor(Color.BLUE)
-        login!!.isClickable = true
-        loadingBar!!.visibility = View.INVISIBLE
-        email!!.isEnabled = true
-        password!!.isEnabled = true
-        checkbox!!.isEnabled = true
-        imageView!!.isClickable = true
-        passwordswitch!!.isClickable = true
-        login!!.setBackgroundColor(Color.BLUE)
-        login!!.isClickable = true
-    }
-
 
     override public fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +73,57 @@ class MainActivity : AppCompatActivity(),IMainVIew ,View.OnClickListener {
 
         //初始化cookie和初始化验证码
         presenter!!.InitCookieData()
+    }
+
+    @SuppressLint("HandlerLeak")
+    internal var handler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                SETCHECKBOX -> {
+                    val res = msg.obj as ByteArray
+                    imageView!!.setImageBitmap(BitmapFactory.decodeByteArray(res, 0, res.size))
+                }
+
+                LOGINSUCCESS -> {
+                    afterLogin()
+                    var intent = Intent(this@MainActivity, SecondActivity::class.java)
+                    Log.d("---------","登陆成功，开始下一个界面")
+                    startActivityForResult(intent,1)
+                }
+                SHOWERROR -> {
+                    var s:String = msg.obj as String
+                    Toast.makeText(this@MainActivity,s,Toast.LENGTH_SHORT).show()
+                }
+                SHOWORUNSHOWPROGRESS -> {
+                    var a:Boolean = msg.obj as Boolean
+                    if(a){
+                        whenlogin()
+                    }else{
+                        afterLogin()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun loginSuccess() {
+        var me : Message = Message.obtain()
+        me.what = this.LOGINSUCCESS
+        handler!!.sendMessage(me)
+    }
+
+    private fun afterLogin() {
+        login!!.setBackgroundColor(Color.BLUE)
+        login!!.isClickable = true
+        loadingBar!!.visibility = View.INVISIBLE
+        email!!.isEnabled = true
+        password!!.isEnabled = true
+        checkbox!!.isEnabled = true
+        imageView!!.isClickable = true
+        passwordswitch!!.isClickable = true
+        login!!.setBackgroundColor(Color.BLUE)
+        login!!.isClickable = true
     }
 
     override fun onClick(v: View) {
@@ -175,16 +175,7 @@ class MainActivity : AppCompatActivity(),IMainVIew ,View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode){
             1 -> {
-                Thread(Runnable {
-                    OkHttpRequest.InitCookieData()
-                    var boolean = true
-                    while (boolean){
-                        if(OkHttpRequest.isgetcookie()){
-                            boolean = false
-                        }
-                    }
-                }).start()
-                presenter!!.getchexkbox()
+                presenter!!.InitCookieData()
                 passwordswitch!!.isChecked = false
                 password!!.inputType = (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
             }
